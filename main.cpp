@@ -3,7 +3,6 @@
 #include <iostream>
 #include <limits>
 #include <string>
-#include <vector>
 
 //DEFINITIONS
 std::string ciphertext(std::string key, std::string plaintext);
@@ -11,12 +10,11 @@ std::string ciphertext(std::string key, std::string plaintext);
 //GLOBAL
 std::string key;
 std::string plaintext;
-std::vector<char> alpha = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
 int main(int argc, char* argv[]){
 
   std::string key = argv[1];
-  std::cout << key << '\n';
+  //std::cout << key << '\n';
 
   //Gets input and stores key in string if exactly 26 chars;
   if(argc == 2) {
@@ -61,21 +59,34 @@ std::string ciphertext(std::string key, std::string plaintext) {
   std::string encrypted = plaintext;
   
   for(int i  = 0; i < plaintext.length(); i++) {
-    
     if(std::isupper(plaintext[i])) {
-      for(int j = 0; j < alpha.size(); j++) {
-        if(alpha[j] == plaintext[j]) {
-          encrypted[i] = key[j]; 
-        }
+      int i_num = (plaintext[i] - 'A');
+
+      if(std::isupper(key[i_num])) {
+        encrypted[i] = key[i_num];
+      } else {
+        encrypted[i] = (key[i_num] + 'A');
       }
 
     } else if(std::islower(plaintext[i])) {
+      int i_num = (plaintext[i] - 'a');
 
+      if(std::isupper(key[i_num])) {
+        encrypted[i] = (key[i_num] - 'A');
+      } else {
+        encrypted[i] = key[i_num];
+      }
+
+      //DEBUG
+      //std::cout << "Pt[i]: " << plaintext[i] << '\n';
+      //std::cout << "Enc: " << encrypted[i] << '\n';
+      
     } else {
       encrypted[i] = plaintext[i];
+
     }
 
   }
-  
+  //std::cout << "Encrypt: " << encrypted << '\n';
   return encrypted;
 }
