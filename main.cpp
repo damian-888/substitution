@@ -61,26 +61,22 @@ std::string ciphertext(std::string key, std::string plaintext) {
   for(int i  = 0; i < plaintext.length(); i++) {
     if(std::isupper(plaintext[i])) {
       int i_num = (plaintext[i] - 'A');
-
-      if(std::isupper(key[i_num])) {
-        encrypted[i] = key[i_num];
-      } else {
-        encrypted[i] = (key[i_num] + 'A');
-      }
+      encrypted[i] = toupper(key[i_num]);
+      
+      //DEBUG
+      //std::cout << "PT[i]: " << plaintext[i] << '\n';
+      //std::cout << "K[i_num]: " << key[i_num] << '\n';
+      //std::cout << "Enc: " << encrypted[i] << '\n';
 
     } else if(std::islower(plaintext[i])) {
       int i_num = (plaintext[i] - 'a');
-
-      if(std::isupper(key[i_num])) {
-        encrypted[i] = (key[i_num] - 'A');
-      } else {
-        encrypted[i] = key[i_num];
-      }
-
-      //DEBUG
-      //std::cout << "Pt[i]: " << plaintext[i] << '\n';
-      //std::cout << "Enc: " << encrypted[i] << '\n';
+      encrypted[i] = tolower(key[i_num]);
       
+      //DEBUG
+      //std::cout << "PT[i]: " << plaintext[i] << '\n';
+      //std::cout << "K[i_num]: " << key[i_num] << '\n';
+      //std::cout << "Enc: " << encrypted[i] << '\n';
+
     } else {
       encrypted[i] = plaintext[i];
 
